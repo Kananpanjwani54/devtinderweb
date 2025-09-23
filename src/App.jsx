@@ -4,6 +4,7 @@ import Profile from "./pages/profile";
 import BodyContainer from "./components/BodyContainer";
 import appStore from "./utils/appStore";
 import { Provider } from "react-redux";
+import Feed from "./pages/Feed";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
     <BrowserRouter basename="/">
       <Routes>
         <Route path="/" element={<BodyContainer />}>
+        <Route path="/" element={<Feed />}/>
           <Route path="/login" element={<Login />} />
           {/* notice no leading slash */}
           <Route path="/profile" element={<Profile />} />
