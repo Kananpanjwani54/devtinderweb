@@ -4,7 +4,7 @@ const NavBar = () => {
   const user = useSelector((store) => store.user);
 
   return (
-<div className="navbar bg-base-100 shadow-sm">
+<div className="navbar bg-base-200 shadow-sm">
   {/* This div is now a flex container */}
   <div className="flex-1">
     <a href="/" className="flex items-center gap-2">
