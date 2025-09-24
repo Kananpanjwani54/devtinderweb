@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { addUser } from "../utils/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const Navigate= useNavigate();
+  const navigate= useNavigate();
+  const userData= useSelector((store) => store.user);
+  
 
   // State variables
   const [email, setEmail] = useState("KananPanjwani10@gmail.com");
   const [password, setPassword] = useState("GoAT@12345");
+  const [error,setError]=useState("")
 
   // Handle login API call
   const handleLogin = async () => {
+    if (userData) return;
     try {
       const res = await axios.post(
         BASE_URL+"/auth/login",
@@ -23,10 +27,14 @@ const Login = () => {
       );
 
       dispatch(addUser(res.data));
-      return Navigate("/")
+      return navigate("/")
     } catch (err) {
-      
-      console.log("Login error:", err);
+      console.log("Login error:", err); 
+      if(err.response?.data){
+          setError(err.response.data);
+      }else{
+        navigate("/error")
+      }
     }
   };
 
@@ -96,6 +104,7 @@ const Login = () => {
           </label>
 
           {/* Login Button */}
+          {error && <p className="text-red-500">Error : {error}</p>}
           <div className="card-actions mt-4 justify-center">
             <button className="btn btn-primary w-full" onClick={handleLogin}>
               Login
