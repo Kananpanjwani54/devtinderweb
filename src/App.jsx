@@ -5,6 +5,8 @@ import BodyContainer from "./components/BodyContainer";
 import appStore from "./utils/appStore";
 import { Provider } from "react-redux";
 import Feed from "./pages/Feed";
+import Error from "./pages/Error"; 
+
 
 function App() {
   return (
@@ -14,6 +16,7 @@ function App() {
         <Route path="/" element={<BodyContainer />}>
         <Route path="/" element={<Feed />}/>
           <Route path="/login" element={<Login />} />
+           <Route path="*" element={<Error />}></Route>
           {/* notice no leading slash */}
           <Route path="/profile" element={<Profile />} />
         </Route>

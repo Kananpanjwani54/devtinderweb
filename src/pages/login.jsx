@@ -25,6 +25,7 @@ const Login = () => {
       dispatch(addUser(res.data));
       return Navigate("/")
     } catch (err) {
+      
       console.log("Login error:", err);
     }
   };
