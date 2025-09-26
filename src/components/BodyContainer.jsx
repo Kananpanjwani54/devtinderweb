@@ -38,9 +38,9 @@ const BodyContainer = () => {
   return (
     <> 
       <NavBar />
-      <div className="container mx-auto h-[200vh]">
         <Outlet />
-      </div>
+        <br>
+        </br>
       <Footer />
     </>
   );
