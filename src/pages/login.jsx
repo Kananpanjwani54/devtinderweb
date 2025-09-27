@@ -106,7 +106,7 @@ const Login = () => {
           {/* Login Button */}
           {error && <p className="text-red-500">Error : {error}</p>}
           <div className="card-actions mt-4 justify-center">
-            <button className="btn btn-primary w-full" onClick={handleLogin}>
+            <button className="btn btn-primary " onClick={handleLogin}>
               Login
             </button>
           </div>

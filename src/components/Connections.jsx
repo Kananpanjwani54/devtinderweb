@@ -46,7 +46,7 @@ const Connections = () => {
               />
               <h2 className="font-semibold text-xl text-gray-900 mb-1">{firstName + " " + lastName}</h2>
               <p className="text-gray-500 text-sm mb-2">{age} yrs | {gender}</p>
-              {about && <p className="text-gray-700 text-sm mb-2">{about}</p>}
+              {about && <p className="text-gray-700 text-sm mb-2 truncate-text-2-lines">{about}</p>}
               {skills && skills.length > 0 && (
                 <p className="text-blue-500 text-sm font-medium">{skills.join(', ')}</p>
               )}

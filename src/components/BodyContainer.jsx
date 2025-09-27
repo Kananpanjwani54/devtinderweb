@@ -34,15 +34,18 @@ const BodyContainer = () => {
   useEffect(() => {
     fetchUser();
   }, []);
-
-  return (
-    <> 
+return (
+    // 1. Replace the fragment with a div and add these classes
+    <div className="min-h-screen flex flex-col">
       <NavBar />
+      
+      {/* 2. Wrap the Outlet in a main tag with flex-grow */}
+      <main className="flex-grow">
         <Outlet />
-        <br>
-        </br>
+      </main>
+      
       <Footer />
-    </>
+    </div>
   );
 };
 
