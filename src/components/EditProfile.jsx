@@ -202,7 +202,8 @@ const EditProfile = ({ user = {} }) => {
         </div>
       </div>
 
-      <SwipeCard
+<div className="w-96 h-full flex-shrink-0">
+      <SwipeCard 
         user={{
           firstName,
           lastName,
@@ -213,6 +214,7 @@ const EditProfile = ({ user = {} }) => {
           gender,
         }}
       />
+    </div>
     </div>
   );
 };
