@@ -69,4 +69,5 @@
   -webkit-line-clamp: 2; /* number of lines */
   -webkit-box-orient: vertical;
   overflow: hidden;
+  line-clamp: 2;
 }
