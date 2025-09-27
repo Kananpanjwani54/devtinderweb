@@ -64,3 +64,9 @@
   --color-shadow: rgba(0, 0, 0, 0.1); /* Light Shadow for elements */
   --color-light-gray: #e5e7eb; /* Lighter Gray (use for backgrounds or light text) */
 }
+.truncate-text-2-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
