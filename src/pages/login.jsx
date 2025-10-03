@@ -5,35 +5,48 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 
-const Login = () => {
+const Auth = () => {
   const dispatch = useDispatch();
-  const navigate= useNavigate();
-  const userData= useSelector((store) => store.user);
-  
+  const navigate = useNavigate();
+  const userData = useSelector((store) => store.user);
 
-  // State variables
-  const [email, setEmail] = useState("KananPanjwani10@gmail.com");
-  const [password, setPassword] = useState("GoAT@12345");
-  const [error,setError]=useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [isLoginForm, setIsLoginForm] = useState(true);
 
-  // Handle login API call
-  const handleLogin = async () => {
+  const handleAuth = async () => {
     if (userData) return;
     try {
-      const res = await axios.post(
-        BASE_URL+"/auth/login",
-        { gmail: email, password },
-        { withCredentials: true }
-      );
+      let res;
+      if (isLoginForm) {
+        // Login API
+        res = await axios.post(
+          BASE_URL + "/auth/login",
+          { gmail: email, password },
+          { withCredentials: true }
+        );
+      } else {
+        // Signup API
+        res = await axios.post(
+          BASE_URL + "/auth/signup",
+          { gmail: email, password, firstName, lastName, gender, age },
+          { withCredentials: true }
+        );
+      }
 
       dispatch(addUser(res.data));
-      return navigate("/")
+      navigate("/profile");
     } catch (err) {
-      console.log("Login error:", err); 
-      if(err.response?.data){
-          setError(err.response.data);
-      }else{
-        navigate("/error")
+      console.log("Auth error:", err);
+      if (err.response?.data) {
+        setError(err.response.data);
+      } else {
+        navigate("/error");
       }
     }
   };
@@ -43,11 +56,14 @@ const Login = () => {
       <div className="card bg-base-300 text-base-content w-96 shadow-2xl rounded-xl">
         <div className="card-body space-y-4">
           <h2 className="card-title text-center text-lg font-semibold justify-center">
-            Login
+            {isLoginForm ? "Login" : "Signup"}
           </h2>
 
-          {/* Email Field */}
-          <label htmlFor="email" className="input input-bordered flex items-center gap-2 bg-base-200">
+          {/* Email Field with Icon */}
+          <label
+            htmlFor="email"
+            className="input input-bordered flex items-center gap-2 bg-base-200 w-full"
+          >
             <h3>Email:</h3>
             <svg
               className="h-5 w-5 opacity-70"
@@ -74,8 +90,11 @@ const Login = () => {
             />
           </label>
 
-          {/* Password Field */}
-          <label htmlFor="password" className="input input-bordered flex items-center gap-2 bg-base-200">
+          {/* Password Field with Icon */}
+          <label
+            htmlFor="password"
+            className="input input-bordered flex items-center gap-2 bg-base-200 w-full"
+          >
             <h3>Password:</h3>
             <svg
               className="h-5 w-5 opacity-70"
@@ -103,17 +122,79 @@ const Login = () => {
             />
           </label>
 
-          {/* Login Button */}
-          {error && <p className="text-red-500">Error : {error}</p>}
+          {/* Signup-only fields */}
+          {!isLoginForm && (
+            <>
+              <input
+                type="text"
+                placeholder="First Name"
+                className="input input-bordered w-full"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Last Name"
+                className="input input-bordered w-full"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+              <select
+                className="select select-bordered w-full"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              >
+                <option value="" disabled>
+                  Select Gender
+                </option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Others">Others</option>
+              </select>
+              <input
+                type="number"
+                placeholder="Enter Age (19-59)"
+                className="input input-bordered w-full"
+                value={age}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value, 10);
+                  if (value >= 19 && value <= 59) {
+                    setAge(value);
+                    setError("");
+                  } else if (e.target.value === "") {
+                    setAge("");
+                    setError("");
+                  } else {
+                    setAge(e.target.value);
+                    setError("Age must be between 19 and 59.");
+                  }
+                }}
+              />
+            </>
+          )}
+
+          {error && <p className="text-red-500">Error: {error}</p>}
+
           <div className="card-actions mt-4 justify-center">
-            <button className="btn btn-primary " onClick={handleLogin}>
-              Login
+            <button className="btn btn-primary" onClick={handleAuth}>
+              {isLoginForm ? "Login" : "Signup"}
             </button>
           </div>
+
+          {/* Toggle link */}
+          <p className="text-center mt-2">
+            {isLoginForm ? "New user?" : "Already have an account?"}{" "}
+            <span
+              className="text-blue-500 cursor-pointer"
+              onClick={() => setIsLoginForm(!isLoginForm)}
+            >
+              {isLoginForm ? "Signup here" : "Login here"}
+            </span>
+          </p>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Auth;

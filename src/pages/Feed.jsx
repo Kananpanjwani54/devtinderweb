@@ -16,7 +16,10 @@ const Feed = () => {
     const [error, setError] = useState(null);
 
   const getFeed = async () => {
-    if (!feed) return; // Prevents unnecessary API calls if data already exists
+    if (feed){
+      setIsLoading(false)
+       return; 
+    }// Prevents unnecessary API calls if data already exists
 
     try {
       const res = await axios.get(BASE_URL + '/user/feed', { withCredentials: true });
