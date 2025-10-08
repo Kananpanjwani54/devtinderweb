@@ -38,7 +38,10 @@ const Auth = () => {
           { withCredentials: true }
         );
       }
-
+      //token added
+  if (res.data.token) {
+      localStorage.setItem('token', res.data.token);
+    }
       dispatch(addUser(res.data));
       navigate("/profile");
     } catch (err) {
