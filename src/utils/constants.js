@@ -1,7 +1,5 @@
 
 
-// export const BASE_URL=location.hostname ==="localhost" ? "http://localhost:3000": "/api"
+export const BASE_URL=location.hostname ==="localhost" ? "http://localhost:3000": "/api"
 
 // // export const BASE_URL="/api"
-//link for render
-export const BASE_URL="https://devtinder-j4uj.onrender.com"||"/api"
